@@ -2,6 +2,7 @@
 #define FUNCTIONS_HPP
 
 Eigen::VectorXd random_point();
+Eigen::VectorXd random_tangente();
 Eigen::VectorXd random_infinite_point();
 Eigen::MatrixXd random_points_matrix(const size_t &n);
 Eigen::VectorXd pt_controle(const Eigen::VectorXd &v);
