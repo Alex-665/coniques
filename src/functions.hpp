@@ -10,3 +10,4 @@ Eigen::MatrixXd matrice_systeme(const Eigen::MatrixXd &m, const size_t &n);
 Eigen::VectorXd resolve_conic(const Eigen::MatrixXd &m);
 
 #endif
+// test bug commit
