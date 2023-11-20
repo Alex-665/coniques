@@ -28,10 +28,12 @@ class Conic {
 
         //bon c'est un peu nul de faire ça, c'est juste pour tracer des jolis trucs, mais y a pas vraiment moyen de mettre des conditions sur les points de manière simple
         static const Conic random_conic(const size_t &n);
+        //celles-ci seront surement pas utiles
         static const Conic ellipse(const size_t &n);
         static const Conic cercle(const size_t &n);
         static const Conic parabole(const size_t &n);
         static const Conic hyperbole(const size_t &n);
+        //jusque là
         static const std::vector<Conic> random_conics(const size_t &n);
 };
 

@@ -27,7 +27,7 @@ const Conic Conic::hyperbole(const size_t &n) {
     return c;
 }
 
-const std::vector<Conic> random_conics(const size_t &n) {
+const std::vector<Conic> Conic::random_conics(const size_t &n) {
     std::vector<Conic> vc(n);
     for (size_t i = 0; i<n; i++) {
         vc[i] = Conic::random_conic(5);

@@ -40,8 +40,10 @@ int main()
     Eigen::VectorXd conic(6);
     conic << -1.4, -0.3, -1, -0.6, 0.0, 0.8;
     Conic c1 = Conic::random_conic(5);
-    viewer.push_conic(c1.get_all(), 0,0,200);
-    //std::vector<Conic> vc = Conic::random_conics(10);
+    std::vector<Conic> vc = Conic::random_conics(10);
+    for (size_t i = 0; i<10; i++) {
+        viewer.push_conic(vc[i].get_all(), rand() % 255, rand() % 255, rand() % 255);
+    }
 
     // render
     viewer.display(); // on terminal

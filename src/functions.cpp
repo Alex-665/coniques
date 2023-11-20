@@ -63,9 +63,9 @@ Eigen::VectorXd resolve_conic(const Eigen::MatrixXd &m)
 }
 
 // une tangente random
-Eigen::VectorXd random_tangente(const Eigen::MatrixXd &m)
+Eigen::VectorXd random_tangente()
 {
-    // je créé mon vecteur "pt1" avec 3 """cases""" pour stocker les coordonnees
+    // je crée mon vecteur "pt1" avec 3 """cases""" pour stocker les coordonnees
     Eigen::VectorXd tangente(3);
     // j'attribue des valeurs aleatoires aux coordonnees
     tangente(0) = float(rand() % 100 / 50);
@@ -75,10 +75,11 @@ Eigen::VectorXd random_tangente(const Eigen::MatrixXd &m)
 }
 
 // equation tangente
-Eigen::VectorXd random_tangente(const Eigen::MatrixXd &m, &tangente) // tester pour const
+Eigen::VectorXd equation_tangente(const Eigen::MatrixXd &m, const Eigen::VectorXd &tan)
 {
     // je calcule et stocke linverse de la matrice conique dans un vecteur "coniqueInverse"
     Eigen::VectorXd coniqueInverse = m.inverse(); //-> j ai un doute sur le nom de la matrice conique
     // je calcule le produit scalaire de la transposee de la tangente avec le produit de coniqueInverse et tangente (la fameuse condition)
-    double calcul = tangente.transpose() * coniqueInverse * tangente;
+    Eigen::VectorXd eq = tan.transpose() * coniqueInverse * tan;
+    return eq;
 }
