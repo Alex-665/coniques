@@ -10,6 +10,16 @@
 
 //fonction qui donne 5 points random
 
+void display_matrix(Eigen::MatrixXd &m) 
+{
+    for (size_t i = 0; i<m.rows(); i++) {
+        for (size_t j = 0; j<m.cols(); j++) {
+            std::cout << m(i,j) << "  " ;
+        }
+        std::cout << "" << std::endl;
+    }
+}
+
 int main()
 {
     // the viewer will open a file whose path is writen in hard (bad!!). 
@@ -29,20 +39,23 @@ int main()
     pt2 <<  3.0,  1.0;
     pt3 << -2.0, -1.0;
 
-    viewer.push_point(pt1, "p1", 200,0,0);
-    viewer.push_point(pt2, "p2", 200,0,0);
-    viewer.push_point(pt3, 200,0,0);
+    //viewer.push_point(pt1, "p1", 200,0,0);
+    //viewer.push_point(pt2, "p2", 200,0,0);
+    //viewer.push_point(pt3, 200,0,0);
 
     // draw line
-    viewer.push_line(pt1, pt2-pt1,  200,200,0);
+    //viewer.push_line(pt1, pt2-pt1,  200,200,0);
 
     // draw conic
-    Eigen::VectorXd conic(6);
-    conic << -1.4, -0.3, -1, -0.6, 0.0, 0.8;
-    Conic c1 = Conic::random_conic(5);
-    std::vector<Conic> vc = Conic::random_conics(10);
+    //std::vector<Conic> vc = Conic::random_conics(5,5);
+    //for (size_t i = 0; i<5; i++) {
+    //    viewer.push_conic(vc[i].get_all(), rand() % 255, rand() % 255, rand() % 255);
+    //}
+    
+    std::vector<Conic> f = Conic::faisceaux_coniques(Conic::random_conic(5), Conic::random_conic(5), 10);
+    
     for (size_t i = 0; i<10; i++) {
-        viewer.push_conic(vc[i].get_all(), rand() % 255, rand() % 255, rand() % 255);
+        viewer.push_conic(f[i].get_all(),255 - 3*i, 0,55 + 3*i);
     }
 
     // render

@@ -9,8 +9,8 @@
 Eigen::VectorXd random_point()
 {
     Eigen::VectorXd pt(3);
-    pt(0) = float(rand() % 100 / 50);
-    pt(1) = float(rand() % 100 / 50);
+    pt(0) = (float)(rand() % 100) / 50;
+    pt(1) = (float)(rand() % 100) / 50;
     pt(2) = 1.0;
     return pt;
 }
@@ -19,8 +19,8 @@ Eigen::VectorXd random_point()
 Eigen::VectorXd random_infinite_point()
 {
     Eigen::VectorXd pt(3);
-    pt(0) = float(rand() % 100 / 50);
-    pt(1) = float(rand() % 100 / 50);
+    pt(0) = (float)(rand() % 100) / 50;
+    pt(1) = (float)(rand() % 100) / 50;
     pt(2) = 0.0;
     return pt;
 }
@@ -68,9 +68,9 @@ Eigen::VectorXd random_tangente()
     // je crée mon vecteur "pt1" avec 3 """cases""" pour stocker les coordonnees
     Eigen::VectorXd tangente(3);
     // j'attribue des valeurs aleatoires aux coordonnees
-    tangente(0) = float(rand() % 100 / 50);
-    tangente(1) = float(rand() % 100 / 50);
-    tangente(2) = float(rand() % 100 / 50);
+    tangente(0) = (float)(rand() % 100) / 50;
+    tangente(1) = (float)(rand() % 100) / 50;
+    tangente(2) = (float)(rand() % 100) / 50;
     return tangente;
 }
 
