@@ -102,4 +102,6 @@ public:
     int push_conic(const Eigen::VectorXd &c, std::string objectName = "", const unsigned int &red = -1, const unsigned int &green = -1, const unsigned int &blue = -1);
 
     void push_conics(const std::vector<Conic> &c);  
+    void push_tans(const Eigen::MatrixXd &l);
+    void push_points(const Eigen::MatrixXd &pts);
 };

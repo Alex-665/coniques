@@ -6,20 +6,6 @@
 
 #include "Geogebra_conics.hpp"
 
-
-//fonction qui donne 5 points random
-
-void display_matrix(Eigen::MatrixXd &m) 
-{
-    for (size_t i = 0; i<m.rows(); i++) {
-        for (size_t j = 0; j<m.cols(); j++) {
-            std::cout << m(i,j) << "  " ;
-        }
-        std::cout << "" << std::endl;
-    }
-}
-
-//à faire : mettre un input utilisateur pour qu'il choisisse ce qu'il veut tracer (une conique, un faisceau, conique à partir de tangentes)
 int main()
 {
     // the viewer will open a file whose path is writen in hard (bad!!). 
@@ -33,21 +19,57 @@ int main()
     viewer.show_value(false);
     viewer.show_label(true);
 
-    // draw points
-    Eigen::VectorXd pt1(2), pt2(2), pt3(2);
-    pt1 <<  1.5,  2.0;
-    pt2 <<  3.0,  1.0;
-    pt3 << -2.0, -1.0;
-
-    //viewer.push_point(pt1, "p1", 200,0,0);
-    //viewer.push_point(pt2, "p2", 200,0,0);
-    //viewer.push_point(pt3, 200,0,0);
-
-    // draw line
-    //viewer.push_line(pt1, pt2-pt1,  200,200,0);
-
-    //std::vector<Conic> f = Conic::faisceaux_coniques(Conic::random_conic(5), Conic::random_conic(5), 20);
-    //viewer.push_conics(f);
+    //input utilisateur
+    std::cout << "Que voulez-vous tracer ? Si vous voulez tracer une simple conique à partir de points, tapez 1, si vous voulez tracer une conique à partir de tangentes, tapez 2, si vous voulez tracer un faisceau de coniques tapez 3."  << std::endl;
+    int x;
+    std::cin >> x;
+    switch (x) 
+    {
+        case 1 :
+            try {
+                std::cout << "Entrez le nombre de points souhaités (au moins 5)." << std::endl;
+                int n;
+                std::cin >> n;
+                if (n<5) throw std::string("vous ne m'avez pas écouté...il faut mettre au moins 5 points.");
+                Eigen::MatrixXd points(n,3);
+                Conic c = Conic::random_conic(n, points);
+                viewer.push_points(points);
+                viewer.push_conic(c.get_all(), 0,200,0);
+            }
+            catch(const std::string &s) {
+                std::cerr << "erreur : " << s << std::endl;
+            }
+            break;
+        case 2 :
+            try {
+                std::cout << "Entrez le nombre de tangentes souhaitées (au moins 5)." << std::endl;
+                int n;
+                std::cin >> n;
+                if (n<5) throw std::string("vous ne m'avez pas écouté...il faut mettre au moins 5 tangentes.");
+                Eigen::MatrixXd tans(n,3);
+                Conic c = Conic::random_tan_conic(n, tans);
+                //on affiche également les tangentes
+                viewer.push_tans(tans);
+                viewer.push_conic(c.get_all(), 0,200,0);
+            }
+            catch(const std::string &s) {
+                std::cerr << "erreur : " << s << std::endl;
+            }
+            break;
+        case 3 :
+            try {
+                std::cout << "Entrez le nombre de coniques que vous voulez dans votre faisceau de coniques (au moins 1 (les coniques seront tracées à partir de 5 points (visuellement on ne s'y retrouve pas vraiment sinon)))." << std::endl;
+                int n;
+                std::cin >> n;
+                if (n<=0) throw std::string("vous ne m'avez pas écouté...il faut mettre au moins 1 conique.");
+                std::vector<Conic> f = Conic::faisceaux_coniques(Conic::random_conic(5), Conic::random_conic(5), n);
+                viewer.push_conics(f);
+            }
+            catch(const std::string &s) {
+                std::cerr << "erreur : " << s << std::endl;
+            }
+            break;
+    }
 
     // render
     viewer.display(); // on terminal

@@ -202,9 +202,29 @@ int Viewer_conic::push_conic(const Eigen::VectorXd &c, std::string objectName, c
     return EXIT_SUCCESS;
 }
 
-void Viewer_conic::push_conics(const std::vector<Conic> &c) {
+void Viewer_conic::push_conics(const std::vector<Conic> &c)
+{
     for (auto e : c) {
         this->push_conic(e.get_all(), rand() % 255, rand() % 255,rand() % 255);
     }
 }
 
+void Viewer_conic::push_tans(const Eigen::MatrixXd &l) 
+{
+
+    for (int i = 0; i<l.rows(); i++) {
+        Eigen::VectorXd pt(2), ptt(2);
+        pt << 1.0, -l(i,0)/l(i,1) - l(i,2)/l(i,1);
+        ptt << 2.0, -(l(i,0)*2.0)/l(i,1) - l(i,2)/l(i,1);
+        this->push_line(pt, ptt-pt, 200, 0, 0);
+    }
+}
+
+void Viewer_conic::push_points(const Eigen::MatrixXd &pts) 
+{
+    for (int i = 0; i<pts.rows(); i++) {
+        Eigen::VectorXd pt(2), ptt(2);
+        pt << pts(i,0), pts(i,1);
+        this->push_point(pt, "", 200, 0, 0);
+    }
+}

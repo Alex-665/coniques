@@ -7,7 +7,6 @@
 
 #include "functions.hpp"
 
-// un point random
 Eigen::VectorXd random_point()
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -20,7 +19,6 @@ Eigen::VectorXd random_point()
     return pt;
 }
 
-// une tangente random
 Eigen::VectorXd random_tangente()
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -33,20 +31,6 @@ Eigen::VectorXd random_tangente()
     return tangente;
 }
 
-// un point random à l'infini
-Eigen::VectorXd random_infinite_point()
-{
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    std::mt19937 generator(seed);
-    std::uniform_real_distribution<double> distrib(-100,100);
-    Eigen::VectorXd pt(3);
-    pt(0) = distrib(generator) / (double)(rand() % 100);
-    pt(1) = distrib(generator) / (double)(rand() % 100);
-    pt(2) = 0.0;
-    return pt;
-}
-
-// fonction qui donne une matrice de n points random
 Eigen::MatrixXd random_points_matrix(const size_t &n)
 {
     Eigen::MatrixXd pts(n, 3);
@@ -54,7 +38,17 @@ Eigen::MatrixXd random_points_matrix(const size_t &n)
     {
         pts(i, Eigen::all) = random_point();
     }
-    pts(2,Eigen::all) = random_infinite_point();
+    return pts;
+}
+
+Eigen::MatrixXd random_points_matrix(const size_t &n, Eigen::MatrixXd &m)
+{
+    Eigen::MatrixXd pts(n, 3);
+    for (size_t i = 0; i < n; i++)
+    {
+        pts(i, Eigen::all) = random_point();
+        m(i,Eigen::all) = pts(i, Eigen::all);
+    }
     return pts;
 }
 
@@ -67,7 +61,17 @@ Eigen::MatrixXd random_tan_matrix(const size_t &n)
     return tans;
 }
 
-// on va prendre w=1 de base
+Eigen::MatrixXd random_tan_matrix(const size_t &n, Eigen::MatrixXd &m)
+{
+    Eigen::MatrixXd tans(n, 3);
+    for (size_t i = 0; i<n; i++) {
+        tans(i, Eigen::all) = random_tangente();
+        m(i, Eigen::all) = tans(i, Eigen::all);
+    }
+    return tans;
+}
+
+// on va prendre w=1
 Eigen::VectorXd pt_controle(const Eigen::VectorXd &v)
 {
     Eigen::VectorXd res(6);

@@ -15,11 +15,8 @@ class Conic {
     private :
         Eigen::VectorXd m_data;
     public :
-        //constructor
         Conic() : m_data(6) {};
-        //copy constructor
         Conic(const Conic &c) = default;
-        //destructor
         ~Conic() = default;
 
         //getter and setter
@@ -29,12 +26,10 @@ class Conic {
         inline void set_all(const Eigen::VectorXd v) {m_data = v;};
         inline void set_all(const Conic c) {m_data = c.m_data;};
 
-        //bon c'est un peu nul de faire ça, c'est juste pour tracer des jolis trucs, mais y a pas vraiment moyen de mettre des conditions sur les points de manière simple
         static Conic random_conic(const size_t &n);
-        static const std::vector<Conic> random_conics(const size_t &n, const size_t &nb_pt);//n coniques à partir de nb_pt points
-        //à voir si cela n'est pas mieux de faire une fonction void qui va directement normer la conique
+        static Conic random_conic(const size_t &n, Eigen::MatrixXd &m);
         inline void conique_normee() {this->m_data/std::sqrt(std::inner_product(this->m_data.begin(), this->m_data.end(), this->m_data.begin(), 0));};
         static std::vector<Conic> faisceaux_coniques(Conic ca, Conic cb, const size_t &n);
         static Conic random_tan_conic(const size_t &n);
-        static const std::vector<Conic> random_tan_conics(const size_t &n, const size_t &nb_tan);
+        static Conic random_tan_conic(const size_t &n, Eigen::MatrixXd &m);
 };
