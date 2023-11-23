@@ -202,4 +202,9 @@ int Viewer_conic::push_conic(const Eigen::VectorXd &c, std::string objectName, c
     return EXIT_SUCCESS;
 }
 
+void Viewer_conic::push_conics(const std::vector<Conic> &c) {
+    for (auto e : c) {
+        this->push_conic(e.get_all(), rand() % 255, rand() % 255,rand() % 255);
+    }
+}
 

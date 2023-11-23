@@ -5,7 +5,6 @@
 #include <Eigen/Dense>
 
 #include "Geogebra_conics.hpp"
-#include "Conic.hpp"
 
 
 //fonction qui donne 5 points random
@@ -20,6 +19,7 @@ void display_matrix(Eigen::MatrixXd &m)
     }
 }
 
+//à faire : mettre un input utilisateur pour qu'il choisisse ce qu'il veut tracer (une conique, un faisceau, conique à partir de tangentes)
 int main()
 {
     // the viewer will open a file whose path is writen in hard (bad!!). 
@@ -46,17 +46,8 @@ int main()
     // draw line
     //viewer.push_line(pt1, pt2-pt1,  200,200,0);
 
-    // draw conic
-    //std::vector<Conic> vc = Conic::random_conics(5,5);
-    //for (size_t i = 0; i<5; i++) {
-    //    viewer.push_conic(vc[i].get_all(), rand() % 255, rand() % 255, rand() % 255);
-    //}
-    
-    std::vector<Conic> f = Conic::faisceaux_coniques(Conic::random_conic(5), Conic::random_conic(5), 10);
-    
-    for (size_t i = 0; i<10; i++) {
-        viewer.push_conic(f[i].get_all(),255 - 3*i, 0,55 + 3*i);
-    }
+    //std::vector<Conic> f = Conic::faisceaux_coniques(Conic::random_conic(5), Conic::random_conic(5), 20);
+    //viewer.push_conics(f);
 
     // render
     viewer.display(); // on terminal

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <cstdlib>
+#include <chrono>
+#include <random>
 #include <Eigen/Dense>
 
 #include "functions.hpp"
@@ -8,19 +10,38 @@
 // un point random
 Eigen::VectorXd random_point()
 {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::mt19937 generator(seed);
+    std::uniform_real_distribution<double> distrib(-100,100);
     Eigen::VectorXd pt(3);
-    pt(0) = (float)(rand() % 100) / 50;
-    pt(1) = (float)(rand() % 100) / 50;
+    pt(0) = distrib(generator) / (double)(rand() % 100);
+    pt(1) = distrib(generator) / (double)(rand() % 100);
     pt(2) = 1.0;
     return pt;
+}
+
+// une tangente random
+Eigen::VectorXd random_tangente()
+{
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::mt19937 generator(seed);
+    std::uniform_real_distribution<double> distrib(-100,100);
+    Eigen::VectorXd tangente(3);
+    tangente(0) = distrib(generator) / (double)(rand() % 100);
+    tangente(1) = distrib(generator) / (double)(rand() % 100);
+    tangente(2) = distrib(generator) / (double)(rand() % 100);
+    return tangente;
 }
 
 // un point random à l'infini
 Eigen::VectorXd random_infinite_point()
 {
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    std::mt19937 generator(seed);
+    std::uniform_real_distribution<double> distrib(-100,100);
     Eigen::VectorXd pt(3);
-    pt(0) = (float)(rand() % 100) / 50;
-    pt(1) = (float)(rand() % 100) / 50;
+    pt(0) = distrib(generator) / (double)(rand() % 100);
+    pt(1) = distrib(generator) / (double)(rand() % 100);
     pt(2) = 0.0;
     return pt;
 }
@@ -33,7 +54,17 @@ Eigen::MatrixXd random_points_matrix(const size_t &n)
     {
         pts(i, Eigen::all) = random_point();
     }
+    pts(2,Eigen::all) = random_infinite_point();
     return pts;
+}
+
+Eigen::MatrixXd random_tan_matrix(const size_t &n)
+{
+    Eigen::MatrixXd tans(n, 3);
+    for (size_t i = 0; i<n; i++) {
+        tans(i, Eigen::all) = random_tangente();
+    }
+    return tans;
 }
 
 // on va prendre w=1 de base
@@ -60,26 +91,4 @@ Eigen::VectorXd resolve_conic(const Eigen::MatrixXd &m)
     Eigen::JacobiSVD<Eigen::MatrixXd> svd(m, Eigen::ComputeThinU | Eigen::ComputeFullV);
     Eigen::VectorXd conic = svd.matrixV().rightCols(1);
     return conic;
-}
-
-// une tangente random
-Eigen::VectorXd random_tangente()
-{
-    // je crée mon vecteur "pt1" avec 3 """cases""" pour stocker les coordonnees
-    Eigen::VectorXd tangente(3);
-    // j'attribue des valeurs aleatoires aux coordonnees
-    tangente(0) = (float)(rand() % 100) / 50;
-    tangente(1) = (float)(rand() % 100) / 50;
-    tangente(2) = (float)(rand() % 100) / 50;
-    return tangente;
-}
-
-// equation tangente
-Eigen::VectorXd equation_tangente(const Eigen::MatrixXd &m, const Eigen::VectorXd &tan)
-{
-    // je calcule et stocke linverse de la matrice conique dans un vecteur "coniqueInverse"
-    Eigen::VectorXd coniqueInverse = m.inverse(); //-> j ai un doute sur le nom de la matrice conique
-    // je calcule le produit scalaire de la transposee de la tangente avec le produit de coniqueInverse et tangente (la fameuse condition)
-    Eigen::VectorXd eq = tan.transpose() * coniqueInverse * tan;
-    return eq;
 }
