@@ -4,6 +4,7 @@
 #include <chrono>
 #include <random>
 #include <Eigen/Dense>
+#include <cstring>
 
 #include "functions.hpp"
 
